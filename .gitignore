@@ -24,3 +24,4 @@ mcu-ticketing/deploy.env
 .vscode/
 *.swp
 *.swo
+bumame-credentials.json

@@ -986,12 +986,16 @@ class RabController extends BaseController {
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-            
             $file_extension = pathinfo($_FILES["transfer_proof"]["name"], PATHINFO_EXTENSION);
             $new_filename = "proof_" . $id . "_" . time() . "." . $file_extension;
             $target_file = $target_dir . $new_filename;
-            
-            if (move_uploaded_file($_FILES["transfer_proof"]["tmp_name"], $target_file)) {
+            $tmp = $_FILES["transfer_proof"]["tmp_name"];
+            if (GcsUpload::isEnabled()) {
+                try {
+                    GcsUpload::upload($tmp, "uploads/finance_proofs/" . $new_filename);
+                    $proof_path = "uploads/finance_proofs/" . $new_filename;
+                } catch (\Exception $e) { }
+            } elseif (move_uploaded_file($tmp, $target_file)) {
                 $proof_path = "uploads/finance_proofs/" . $new_filename;
             }
         }
