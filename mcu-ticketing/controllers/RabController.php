@@ -792,8 +792,9 @@ class RabController extends BaseController {
                         $finance_emails = [];
                         
                         foreach ($finance_users as $u) {
-                            if (stripos($u['jabatan'], 'AP') !== false) {
-                                if (!empty($u['username'])) $finance_emails[] = $u['username']; // username is email
+                            $jabatan = $u['jabatan'] ?? '';
+                            if (stripos((string)$jabatan, 'AP') !== false) {
+                                if (!empty($u['username'])) $finance_emails[] = $u['username'];
                             }
                         }
                         
