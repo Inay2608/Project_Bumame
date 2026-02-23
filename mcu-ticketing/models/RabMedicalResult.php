@@ -238,7 +238,7 @@ class RabMedicalResult {
     }
 
     public function markAsCompleted($id) {
-        $query = "UPDATE " . $this->table . " SET status = 'completed', updated_at = NOW() WHERE id = :id";
+        $query = "UPDATE " . $this->table . " SET status = 'approved_head', updated_at = NOW() WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         return $stmt->execute();
