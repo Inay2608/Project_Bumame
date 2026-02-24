@@ -607,25 +607,7 @@
                                                 </a>
                                                 <?php 
                                                     $proof = isset($rab['transfer_proof_path']) ? $rab['transfer_proof_path'] : '';
-                                                    $proof_url = '';
-                                                    
-                                                    if (!empty($proof)) {
-                                                        // Clean path to get standard relative path (e.g. uploads/finance_proofs/file.jpg)
-                                                        $clean_path = str_replace('../', '', $proof);
-                                                        $clean_path = str_replace('public/', '', $clean_path);
-                                                        
-                                                        // Check where the file actually is
-                                                        if (file_exists($clean_path)) {
-                                                            // It exists in public/uploads (standard view path)
-                                                            $proof_url = $clean_path;
-                                                        } elseif (file_exists('../' . $clean_path)) {
-                                                            // It exists in root uploads (mcu-ticketing/uploads)
-                                                            $proof_url = '../' . $clean_path;
-                                                        } else {
-                                                            // Fallback to cleaned path (link might be 404 but we tried)
-                                                            $proof_url = $clean_path;
-                                                        }
-                                                    }
+                                                    $proof_url = !empty($proof) ? file_url($proof) : '';
                                                 ?>
                                                 <?php if (!empty($proof)): ?>
                                                     <a href="<?php echo htmlspecialchars($proof_url); ?>" target="_blank" class="btn btn-sm btn-outline-success" title="Bukti Transfer Finance">
